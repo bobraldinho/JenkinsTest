@@ -1,11 +1,20 @@
 pipeline {
     agent any
-
-    stages{
-        stage('BUILD') {
+    environment {
+        artifactory_url = '18.217.84.244:8081'
+    }
+    stages {
+        stage ('Maven build') {
             steps {
-                sh 'echo BUILDING STAGE IS COMPLETED'
+                
+                sh 'mvn clean install -Dmaven.test.skip=true'
+                
             }
         }
-    } 
+        stage ('Archive Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar'
+            }
+        }
+    }
 }
