@@ -8,8 +8,7 @@ pipeline {
             steps {
                 
                 sh """
-                    mvn clean install -f \
-                    spring-boot-tests/spring-boot-smoke-tests/spring-boot-smoke-test-web-ui/ \
+                    mvn clean install -f spring-boot-tests/spring-boot-smoke-tests/spring-boot-smoke-test-web-ui/pom.xml \
                     -Dmaven.test.skip=true'
                 """    
             }
