@@ -7,8 +7,11 @@ pipeline {
         stage ('Maven build') {
             steps {
                 
-                sh 'mvn clean install -Dmaven.test.skip=true'
-                
+                sh """
+                    mvn clean install -f \
+                    spring-boot-tests/spring-boot-smoke-tests/spring-boot-smoke-test-web-ui/ \
+                    -Dmaven.test.skip=true'
+                """    
             }
         }
         stage ('Archive Artifact') {
