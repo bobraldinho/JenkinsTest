@@ -37,7 +37,7 @@ pipeline {
         }
         stage ('Invoke Ansible deploy playbook') {
             steps {
-               sh 'ansible-playbook -i /tmp/inventory tmp/deploy_to_ci.yml -u ubuntu --private-key ~/gradwork.pem -e "artifactory_url=${artifactory_url} build_number=${BUILD_NUMBER}"'
+               sh 'ansible-playbook -i /tmp/inventory /tmp/deploy_to_ci.yml -u ubuntu --private-key ~/gradwork.pem -e "artifactory_url=${artifactory_url} build_number=${BUILD_NUMBER}"'
             }
         }
     }
