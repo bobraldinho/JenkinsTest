@@ -19,5 +19,26 @@ pipeline {
                 archiveArtifacts artifacts: "${target}/target/*.jar"
             }
         }
+        stage ('Uploading to Artifactory') {
+            steps {    
+                rtUpload (
+                    serverId: "artifactory",
+                    spec:
+                        """{
+                          "files": [
+                            {
+                              "pattern": "target/*jar",
+                              "target": "djqyfvbhjd/${BUILD_NUMBER}/"
+                            }
+                         ]
+                        }"""
+                )
+            }
+        }
+        stage ('Invoke Ansible deploy playbook') {
+            steps {
+               sh 'ansible-playbook -i /tmp/inventory tmp/deploy_to_ci.yml -u ubuntu -e "artifactory_url=${artifactory_url} build_number=${BUILD_NUMBER}"'
+            }
+        }
     }
 }
